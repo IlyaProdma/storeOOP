@@ -10,13 +10,11 @@ namespace Store
     {
         protected string name;
         private List<Subcategory> subcategories;
-        protected List<Product> products;
 
         public Category(string name)
         {
             this.name = name;
             subcategories = new List<Subcategory>();
-            products = new List<Product>();
         }
 
         public string Name
@@ -36,14 +34,6 @@ namespace Store
             get
             {
                 return subcategories;
-            }
-        }
-
-        public List<Product> Products
-        {
-            get
-            {
-                return products;
             }
         }
     }

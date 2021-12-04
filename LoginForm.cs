@@ -34,7 +34,7 @@ namespace Store
         private void buttonSignIn_Click(object sender, EventArgs e)
         {
             labelAlertNoUsersInFile.Visible = false;
-            string json = File.ReadAllText("customers.json");
+            string json = File.ReadAllText("data/customers.json");
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(json);
             //byte[] tmpSource = ASCIIEncoding.ASCII.GetBytes(textboxPassword.Text);
             //string inputPassword = BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(tmpSource));
@@ -70,7 +70,7 @@ namespace Store
         private void buttonSignUp_Click(object sender, EventArgs e)
         {
             labelAlertNoUsersInFile.Visible = false;
-            string json = File.ReadAllText("customers.json");
+            string json = File.ReadAllText("data/customers.json");
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(json);
             if (customers == null || customers.Where<Customer>(cs => cs.Login.ToLower() == textboxLogin.Text.ToLower()).Count() <= 0)
             {
@@ -81,7 +81,7 @@ namespace Store
                 }
                 customers.Add(newCustomer);
                 json = JsonConvert.SerializeObject(customers, Formatting.Indented);
-                File.WriteAllText("customers.json", json.ToString());
+                File.WriteAllText("data/customers.json", json);
                 labelAlertNoUsersInFile.Text = "Successfull sign up.";
                 labelAlertNoUsersInFile.Visible = true;
             }
