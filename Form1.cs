@@ -12,6 +12,7 @@ namespace Store
 {
     public partial class Form1 : Form
     {
+        private List<User> users;
         public Form1()
         {
             InitializeComponent();
