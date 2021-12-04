@@ -36,8 +36,11 @@ namespace Store
             labelAlertNoUsersInFile.Visible = false;
             string json = File.ReadAllText("customers.json");
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(json);
-            byte[] tmpSource = UTF8Encoding.UTF8.GetBytes(textboxPassword.Text);
-            byte[] inputPassword = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
+            //byte[] tmpSource = ASCIIEncoding.ASCII.GetBytes(textboxPassword.Text);
+            //string inputPassword = BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(tmpSource));
+            string inputPassword = textboxPassword.Text;
+            labelAlertNoUsersInFile.Text = customers.ElementAt(0).Password + "\n" + inputPassword + "\n" + json;
+            labelAlertNoUsersInFile.Visible = true;
             if (customers == null)
             {
                 labelAlertNoUsersInFile.Text = "There are currently no users, please sign up to continue.";
@@ -47,9 +50,10 @@ namespace Store
             {
                 foreach (Customer customer in customers)
                 {
-                    if (customer.Login == textboxLogin.Text && customer.Password.SequenceEqual(inputPassword))
+                    if (customer.Login == textboxLogin.Text && customer.Password.Equals(inputPassword))
                     {
-                        textboxLogin.Text = "EBAT'";
+                        labelAlertNoUsersInFile.Text = "Successfull sign in.";
+                        labelAlertNoUsersInFile.Visible = true;
                     }
                 }
             }
@@ -60,8 +64,6 @@ namespace Store
             labelAlertNoUsersInFile.Visible = false;
             string json = File.ReadAllText("customers.json");
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(json);
-            byte[] tmpSource = UTF8Encoding.UTF8.GetBytes(textboxPassword.Text);
-            byte[] inputPassword = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
             if (customers == null || customers.Where<Customer>(cs => cs.Login.ToLower() == textboxLogin.Text.ToLower()).Count() <= 0)
             {
                 Customer newCustomer = new Customer(textboxLogin.Text, textboxPassword.Text);

@@ -31,13 +31,13 @@
         {
             this.panelLogin = new System.Windows.Forms.Panel();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            this.labelAlertNoUsersInFile = new DarkUI.Controls.DarkLabel();
             this.buttonSignUp = new DarkUI.Controls.DarkButton();
             this.buttonSignIn = new DarkUI.Controls.DarkButton();
             this.labelPassword = new DarkUI.Controls.DarkLabel();
             this.textboxPassword = new DarkUI.Controls.DarkTextBox();
             this.labelLogin = new DarkUI.Controls.DarkLabel();
             this.textboxLogin = new DarkUI.Controls.DarkTextBox();
-            this.labelAlertNoUsersInFile = new DarkUI.Controls.DarkLabel();
             this.panelLogin.SuspendLayout();
             this.darkSectionPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -68,6 +68,17 @@
             this.darkSectionPanel1.SectionHeader = "Login";
             this.darkSectionPanel1.Size = new System.Drawing.Size(664, 441);
             this.darkSectionPanel1.TabIndex = 0;
+            // 
+            // labelAlertNoUsersInFile
+            // 
+            this.labelAlertNoUsersInFile.AutoSize = true;
+            this.labelAlertNoUsersInFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.labelAlertNoUsersInFile.Location = new System.Drawing.Point(95, 330);
+            this.labelAlertNoUsersInFile.Name = "labelAlertNoUsersInFile";
+            this.labelAlertNoUsersInFile.Size = new System.Drawing.Size(479, 24);
+            this.labelAlertNoUsersInFile.TabIndex = 6;
+            this.labelAlertNoUsersInFile.Text = "There are currently no users, please sign up to continue";
+            this.labelAlertNoUsersInFile.Visible = false;
             // 
             // buttonSignUp
             // 
@@ -140,17 +151,6 @@
             this.textboxLogin.TabIndex = 0;
             this.textboxLogin.TextChanged += new System.EventHandler(this.textboxLogin_TextChanged);
             // 
-            // labelAlertNoUsersInFile
-            // 
-            this.labelAlertNoUsersInFile.AutoSize = true;
-            this.labelAlertNoUsersInFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.labelAlertNoUsersInFile.Location = new System.Drawing.Point(95, 330);
-            this.labelAlertNoUsersInFile.Name = "labelAlertNoUsersInFile";
-            this.labelAlertNoUsersInFile.Size = new System.Drawing.Size(479, 24);
-            this.labelAlertNoUsersInFile.TabIndex = 6;
-            this.labelAlertNoUsersInFile.Text = "There are currently no users, please sign up to continue";
-            this.labelAlertNoUsersInFile.Visible = false;
-            // 
             // LoginForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -159,7 +159,7 @@
             this.ClientSize = new System.Drawing.Size(684, 461);
             this.Controls.Add(this.panelLogin);
             this.Margin = new System.Windows.Forms.Padding(1);
-            this.MaximumSize = new System.Drawing.Size(700, 500);
+            this.MaximumSize = new System.Drawing.Size(700, 1000);
             this.MinimumSize = new System.Drawing.Size(700, 500);
             this.Name = "LoginForm";
             this.Text = "Dark Store";
