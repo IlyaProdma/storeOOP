@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store
 {
-    class Subcategory : Category
+    public class Subcategory : Category
     {
         public Subcategory(string name) : base(name)
         {

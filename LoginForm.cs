@@ -54,6 +54,14 @@ namespace Store
                     {
                         labelAlertNoUsersInFile.Text = "Successfull sign in.";
                         labelAlertNoUsersInFile.Visible = true;
+                        if (customer.Access == AccessLevel.customer)
+                        {
+                            Hide();
+                            StoreCustomerForm storeCustomerForm = new StoreCustomerForm(customer);
+                            storeCustomerForm.Closed += (s, args) => this.Close();
+                            storeCustomerForm.Show();
+                            break;
+                        }
                     }
                 }
             }

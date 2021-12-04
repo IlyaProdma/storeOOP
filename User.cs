@@ -8,14 +8,14 @@ using System.Security.Cryptography;
 namespace Store
 {
 
-    enum AccessLevel
+    public enum AccessLevel
     {
         undefined = 0,
         customer,
         staff,
         supervisor
     }
-    class User
+    public class User
     {
         protected string login;
         protected string password;

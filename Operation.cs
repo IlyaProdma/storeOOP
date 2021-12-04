@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store
 {
-    class Operation
+    public class Operation
     {
         private DateTime date;
         private Product product;

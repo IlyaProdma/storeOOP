@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store
 {
-    class Category
+    public class Category
     {
         protected string name;
         private List<Subcategory> subcategories;

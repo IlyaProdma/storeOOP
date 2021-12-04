@@ -121,6 +121,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="StoreCustomerForm.resx">
+      <DependentUpon>StoreCustomerForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="StoreStaffForm.resx">
       <DependentUpon>StoreStaffForm.cs</DependentUpon>
     </EmbeddedResource>

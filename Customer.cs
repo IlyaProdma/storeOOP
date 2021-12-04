@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Store
 {
-    class Customer : User
+    public class Customer : User
     {
         private List<Product> favorites;
         private List<Product> cart;
