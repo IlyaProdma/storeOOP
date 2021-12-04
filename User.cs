@@ -17,9 +17,9 @@ namespace Store
     }
     class User
     {
-        private string login;
-        private byte[] password;
-        private AccessLevel access;
+        protected string login;
+        protected byte[] password;
+        protected AccessLevel access;
 
         public User(string login, string password, AccessLevel access = AccessLevel.undefined)
         {
@@ -27,6 +27,30 @@ namespace Store
             byte[] tmpSource = UTF8Encoding.UTF8.GetBytes(password);
             this.password = new MD5CryptoServiceProvider().ComputeHash(tmpSource);
             this.access = access;
+        }
+
+        public string Login
+        {
+            get
+            {
+                return login;
+            }
+        }
+
+        public byte[] Password
+        {
+            get
+            {
+                return password;
+            }
+        }
+
+        public AccessLevel Access
+        {
+            get
+            {
+                return access;
+            }
         }
     }
 }
