@@ -9,9 +9,9 @@ namespace Store
     public class Operation
     {
         private DateTime date;
-        private Product product;
+        private string product;
 
-        public Operation(DateTime date, Product product)
+        public Operation(DateTime date, string product)
         {
             this.date = date;
             this.product = product;
@@ -25,7 +25,7 @@ namespace Store
             }
         }
 
-        public Product Product
+        public string Product
         {
             get
             {

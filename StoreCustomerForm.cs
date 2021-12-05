@@ -117,5 +117,23 @@ namespace Store
             }
 
         }
+
+        private void buttonCart_Click(object sender, EventArgs e)
+        {
+            IndividualProductsListForm cartForm = new IndividualProductsListForm(customer.Login, true);
+            cartForm.ShowDialog();
+        }
+
+        private void buttonFavorites_Click(object sender, EventArgs e)
+        {
+            IndividualProductsListForm favsForm = new IndividualProductsListForm(customer.Login, false);
+            favsForm.ShowDialog();
+        }
+
+        private void buttonOperations_Click(object sender, EventArgs e)
+        {
+            CustomerOperationsForm csOpForm = new CustomerOperationsForm(customer.Operations);
+            csOpForm.ShowDialog();
+        }
     }
 }

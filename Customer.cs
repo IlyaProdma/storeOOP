@@ -32,6 +32,10 @@ namespace Store
             {
                 return favorites;
             }
+            set
+            {
+                favorites = value;
+            }
         }
 
         public List<Product> Cart
@@ -39,6 +43,10 @@ namespace Store
             get
             {
                 return cart;
+            }
+            set
+            {
+                cart = value;
             }
         }
 

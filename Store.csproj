@@ -84,6 +84,18 @@
   <ItemGroup>
     <Compile Include="Category.cs" />
     <Compile Include="Customer.cs" />
+    <Compile Include="CustomerOperationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CustomerOperationsForm.Designer.cs">
+      <DependentUpon>CustomerOperationsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="IndividualProductsListForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="IndividualProductsListForm.Designer.cs">
+      <DependentUpon>IndividualProductsListForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="JsonImage.cs" />
     <Compile Include="LoginForm.cs">
       <SubType>Form</SubType>
@@ -116,6 +128,12 @@
     </Compile>
     <Compile Include="Subcategory.cs" />
     <Compile Include="User.cs" />
+    <EmbeddedResource Include="CustomerOperationsForm.resx">
+      <DependentUpon>CustomerOperationsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="IndividualProductsListForm.resx">
+      <DependentUpon>IndividualProductsListForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>

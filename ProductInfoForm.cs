@@ -32,15 +32,11 @@ namespace Store
             labelManufacturer.Text = string.Format("Производитель: {0}", product.Manufacturer);
             labelProductionPlace.Text = string.Format("Место производства: {0}", product.PlaceOfProduction);
             labelProductionSeries.Text = string.Format("Серия: {0}", product.ProductionSeries);
-            if (customer.Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count() > 0)
+            int cartCount = customer.Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count();
+            if (cartCount > 0)
             {
-                buttonAddToCart.Text = "Удалить из корзины";
-                buttonAddToCart.Click += buttonRemoveFromCart_Click;
-            }
-            else
-            {
-                buttonAddToCart.Text = "Добавить в корзину";
-                buttonAddToCart.Click += buttonAddToCart_Click;
+                buttonAddToCart.Text = string.Format("В корзину ({0})", cartCount);
+                buttonRemoveFromCart.Enabled = true;
             }
             if (customer.Favorites.Where<Product>(p => p.VendorCode == product.VendorCode).Count() > 0)
             {
@@ -58,13 +54,11 @@ namespace Store
         {
             List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
             int index = customers.IndexOf(customers.Where<Customer>(cs => cs.Login == Login).ElementAt(0));
-            if (customers[index].Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count() <= 0)
-            {
-                customers[index].Cart.Add(product);
-                File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
-                buttonAddToCart.Text = "Удалить из корзины";
-                buttonAddToCart.Click += buttonRemoveFromCart_Click;
-            }
+            customers[index].Cart.Add(product);
+            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+            buttonAddToCart.Text = string.Format("В корзину ({0})",
+                                                customers[index].Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count());
+            buttonRemoveFromCart.Enabled = true;
         }
 
         private void buttonReturn_Click(object sender, EventArgs e)
@@ -82,9 +76,13 @@ namespace Store
                 int cartIndex = customers[index].Cart.IndexOf(filtered.ElementAt(0));
                 customers[index].Cart.RemoveAt(cartIndex);
                 File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
-                buttonAddToCart.Text = "Добавить в корзину";
-                buttonAddToCart.Click += buttonAddToCart_Click;
             }
+            int cartCount = customers[index].Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count();
+            if (cartCount <= 0)
+            {
+                buttonRemoveFromCart.Enabled = false;
+            }
+            buttonAddToCart.Text = string.Format("В корзину ({0})", cartCount);
         }
 
         private void buttonAddToFavorites_Click(object sender, EventArgs e)
