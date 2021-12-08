@@ -21,7 +21,7 @@ namespace Store
         {
             InitializeComponent();
             this.CategoryNotSubcategory = CategoryNotSubcategory;
-            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
+            List<Category> categories = Utils.readAllCategories();
             foreach (var category in categories)
             {
                 categoriesListView.Items.Add(new DarkListItem(category.Name));
@@ -71,7 +71,7 @@ namespace Store
 
         private void buttonApply_Click(object sender, EventArgs e)
         {
-            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
+            List<Category> categories = Utils.readAllCategories();
             if (CategoryNotSubcategory)
             {
                 if (categories.Find(cat => cat.Name.Equals(nameTextBox.Text)) != null)
@@ -86,7 +86,7 @@ namespace Store
                     {
                         categoriesListView.Items.Add(new DarkListItem(category.Name));
                     }
-                    File.WriteAllText("data/categories.json", JsonConvert.SerializeObject(categories, Formatting.Indented));
+                    Utils.writeCategories(categories);
                     MessageBox.Show("Successfully added new category");
                     Close();
                 }
@@ -101,7 +101,7 @@ namespace Store
                 else
                 {
                     categories[index].Subcategories.Add(new Subcategory(nameTextBox.Text));
-                    File.WriteAllText("data/categories.json", JsonConvert.SerializeObject(categories, Formatting.Indented));
+                    Utils.writeCategories(categories);
                     MessageBox.Show(string.Format("Successfully added new subcategory to category {0}", categories[index].Name));
                     Close();
                 }

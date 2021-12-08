@@ -52,10 +52,10 @@ namespace Store
 
         private void buttonAddToCart_Click(object sender, EventArgs e)
         {
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             int index = customers.IndexOf(customers.Where<Customer>(cs => cs.Login == Login).ElementAt(0));
             customers[index].Cart.Add(product);
-            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+            Utils.writeCustomers(customers);
             buttonAddToCart.Text = string.Format("В корзину ({0})",
                                                 customers[index].Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count());
             buttonRemoveFromCart.Enabled = true;
@@ -68,14 +68,14 @@ namespace Store
 
         private void buttonRemoveFromCart_Click(object sender, EventArgs e)
         {
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             int index = customers.IndexOf(customers.Where<Customer>(cs => cs.Login == Login).ElementAt(0));
             var filtered = customers[index].Cart.Where<Product>(p => p.VendorCode == product.VendorCode);
             if (filtered.Count() > 0)
             {
                 int cartIndex = customers[index].Cart.IndexOf(filtered.ElementAt(0));
                 customers[index].Cart.RemoveAt(cartIndex);
-                File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+                Utils.writeCustomers(customers);
             }
             int cartCount = customers[index].Cart.Where<Product>(p => p.VendorCode == product.VendorCode).Count();
             if (cartCount <= 0)
@@ -87,12 +87,12 @@ namespace Store
 
         private void buttonAddToFavorites_Click(object sender, EventArgs e)
         {
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             int index = customers.IndexOf(customers.Where<Customer>(cs => cs.Login == Login).ElementAt(0));
             if (customers[index].Favorites.Where<Product>(p => p.VendorCode == product.VendorCode).Count() <= 0)
             {
                 customers[index].Favorites.Add(product);
-                File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+                Utils.writeCustomers(customers);
                 buttonAddToFavorites.Text = "Удалить из избранного";
                 buttonAddToFavorites.Click += buttonRemoveFromFavorites_Click;
             }
@@ -100,14 +100,14 @@ namespace Store
 
         private void buttonRemoveFromFavorites_Click(object sender, EventArgs e)
         {
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             int index = customers.IndexOf(customers.Where<Customer>(cs => cs.Login == Login).ElementAt(0));
             var filtered = customers[index].Favorites.Where<Product>(p => p.VendorCode == product.VendorCode);
             if (filtered.Count() > 0)
             {
                 int favIndex = customers[index].Favorites.IndexOf(filtered.ElementAt(0));
                 customers[index].Favorites.RemoveAt(favIndex);
-                File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+                Utils.writeCustomers(customers);
                 buttonAddToFavorites.Text = "Добавить в избранное";
                 buttonAddToFavorites.Click += buttonAddToFavorites_Click;
             }

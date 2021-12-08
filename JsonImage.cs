@@ -23,6 +23,10 @@ namespace Store
             {
                 return vendorCode;
             }
+            set
+            {
+                vendorCode = value;
+            }
         }
 
         public string Image
@@ -30,6 +34,10 @@ namespace Store
             get
             {
                 return image;
+            }
+            set
+            {
+                image = value;
             }
         }
     }

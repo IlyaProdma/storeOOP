@@ -28,16 +28,15 @@ namespace Store
             productsListView.Items.Clear();
             ImageList imageList = new ImageList();
             imageList.ImageSize = new Size(200, 200);
-            List<JsonImage> images = JsonConvert.DeserializeObject<List<JsonImage>>(File.ReadAllText("data/images.json"));
+            List<JsonImage> images = Utils.readAllImages();
             products = CartNotFavorites ? 
-                                     JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"))
-                                        .Where<Customer>(cs => cs.Login == Login).ElementAt(0).Cart 
-                                    : JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"))
-                                        .Where<Customer>(cs => cs.Login == Login).ElementAt(0).Favorites;
+                                     Utils.readAllCustomers().Where<Customer>(cs => cs.Login == Login).ElementAt(0).Cart 
+                                    : Utils.readAllCustomers().Where<Customer>(cs => cs.Login == Login).ElementAt(0).Favorites;
             buttonBuy.Enabled = buttonDeleteFrom.Enabled = products.Count > 0;
             foreach (Product product in products)
             {
-                imageList.Images.Add(new Bitmap(images.Where<JsonImage>(im => im.VendorCode == product.VendorCode).ElementAt(0).Image));
+                imageList.Images.Add(new Bitmap(images.Where<JsonImage>(im => im.VendorCode == product.VendorCode)
+                                                    .ElementAt(0).Image));
             }
 
             Bitmap emptyImage = new Bitmap(200, 200);
@@ -49,9 +48,12 @@ namespace Store
             productsListView.LargeImageList = imageList;
             for (int i = 0; i < products.Count; ++i)
             {
-                ListViewItem item = new ListViewItem(new string[] { String.Format("{0} - {1}р", products[i].Name,
-                                                                    products[i].PriceRetail.ToString()), products[i].VendorCode,
-                                                                    images.Where<JsonImage>(im => im.VendorCode == products[i].VendorCode).ElementAt(0).Image});
+                ListViewItem item = new ListViewItem(new string[] { String.Format("{0} - {1}р",
+                                                                    products[i].Name,
+                                                                    products[i].PriceRetail.ToString()),
+                                                                    products[i].VendorCode,
+                                                                    images.Where<JsonImage>(im => im.VendorCode == products[i].VendorCode)
+                                                                        .ElementAt(0).Image});
                 item.ImageIndex = i;
                 productsListView.Items.Add(item);
             }
@@ -61,8 +63,8 @@ namespace Store
                 buttonBuy.Click += buttonBuy_Click;
                 panelOperationsList.Visible = true;
                 buttonBuy.Text = string.Format("Совершить покупку ({0}р)", products.Sum<Product>(p => p.PriceRetail));
-                List<Operation> operations = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"))
-                                            .Where<Customer>(cs => cs.Login == Login).ElementAt(0).Operations;
+                List<Operation> operations = Utils.readAllCustomers().Where<Customer>(cs => cs.Login == Login)
+                                                .ElementAt(0).Operations;
                 foreach (Operation operation in operations)
                 {
                     operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1}", operation.Product, operation.Date)));
@@ -88,13 +90,13 @@ namespace Store
 
                 }
             }
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             buttonBuy.Text = string.Format("Совершить покупку ({0}р)", products.Sum<Product>(p => p.PriceRetail));
             if (CartNotFavorites)
                 customers.Find(cs => cs.Login == Login).Cart = products;
             else
                 customers.Find(cs => cs.Login == Login).Favorites = products;
-            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+            Utils.writeCustomers(customers);
             if (products.Count <= 0)
             {
                 buttonDeleteFrom.Enabled = false;
@@ -104,30 +106,42 @@ namespace Store
 
         private void buttonBuy_Click(object sender, EventArgs e)
         {
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             Customer customer = customers.Find(cs => cs.Login == Login);
-            foreach (Product product in customer.Cart)
+            if (customer.Cart.Find(p => p.QuantityInStock <= 0) != null)
             {
-                DateTime date = DateTime.Now;
-                customer.Operations.Add(new Operation(date, product.Name));
-                operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1}", product.Name, date)));
+                string listOfAbsentProducts = "Операция невозможна. Следующие продукты отсутствуют в наличии: ";
+                foreach (Product product in customer.Cart.Where(p => p.QuantityInStock <= 0))
+                {
+                    listOfAbsentProducts += string.Format("\"{0}\"\n", product.Name);
+                }
+                MessageBox.Show(listOfAbsentProducts);
             }
-            customer.Cart.Clear();
-            productsListView.Items.Clear();
-            buttonBuy.Text = "Совершить покупку (0р)";
-            buttonBuy.Enabled = false;
-            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+            else
+            {
+                foreach (Product product in customer.Cart)
+                {
+                    DateTime date = DateTime.Now;
+                    customer.Operations.Add(new Operation(date, product.Name));
+                    operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1}", product.Name, date)));
+                }
+                customer.Cart.Clear();
+                productsListView.Items.Clear();
+                buttonBuy.Text = "Совершить покупку (0р)";
+                buttonBuy.Enabled = false;
+                Utils.writeCustomers(customers);
+            }
         }
 
         private void buttonAddToCart_Click(object sender, EventArgs e)
         {
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Customer> customers = Utils.readAllCustomers();
             int index = customers.IndexOf(customers.Where<Customer>(cs => cs.Login == Login).ElementAt(0));
             foreach (Product product in products)
             {
                 customers[index].Cart.Add(product);
             }
-            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+            Utils.writeCustomers(customers);
         }
     }
 }

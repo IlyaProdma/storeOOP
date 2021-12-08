@@ -28,8 +28,7 @@ namespace Store
             if (CategoryNotSubcategory)
             {
                 darkSectionPanel1.SectionHeader = string.Format("Товары категории \"{0}\"", CategoryName);                
-                products = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"))
-                                        .Where<Product>(p => p.Category.Equals(CategoryName)).ToList();
+                products = Utils.readAllProducts().Where<Product>(p => p.Category.Equals(CategoryName)).ToList();
                 foreach (Product product in products)
                 {
                     productsListView.Items.Add(new ListViewItem(new string[] { product.Name, product.Subcategory}));
@@ -42,8 +41,7 @@ namespace Store
                 buttonClearCat.Text = "Очистить подкатегорию";
                 buttonDeleteCat.Text = "Удалить подкатегорию";
                 darkSectionPanel1.SectionHeader = string.Format("Товары подкатегории \"{0}\"", CategoryName);
-                products = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"))
-                                        .Where<Product>(p => p.Subcategory.Equals(CategoryName)).ToList();
+                products = Utils.readAllProducts().Where<Product>(p => p.Subcategory.Equals(CategoryName)).ToList();
                 foreach (Product product in products)
                 {
                     productsListView.Items.Add(new ListViewItem(new string[] { product.Name}));
@@ -57,7 +55,7 @@ namespace Store
 
         private void buttonDeleteSelected_Click(object sender, EventArgs e)
         {
-            List<Product> allProducts = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"));
+            List<Product> allProducts = Utils.readAllProducts();
             for (int i = 0; i < productsListView.Items.Count; ++i)
             {
                 if (productsListView.Items[i].Selected)
@@ -78,7 +76,7 @@ namespace Store
                     --i;
                 }
             }
-            File.WriteAllText("data/products.json", JsonConvert.SerializeObject(allProducts, Formatting.Indented));
+            Utils.writeProducts(allProducts);
         }
 
         private void productsListView_SelectedIndexChanged(object sender, EventArgs e)
@@ -97,14 +95,14 @@ namespace Store
         {
             if (CategoryNotSubcategory)
             {
-                List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
+                List<Category> categories = Utils.readAllCategories();
                 if (categories.Find(cat => cat.Name.Equals(newNameTextBox.Text)) != null)
                 {
                     MessageBox.Show("Такая категория уже существует!");
                 }
                 else
                 {
-                    List<Product> products = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"));
+                    List<Product> products = Utils.readAllProducts();
                     foreach (var product in products)
                     {
                         if (product.Category.Equals(CategoryName))
@@ -112,8 +110,8 @@ namespace Store
                             product.Category = newNameTextBox.Text;
                         }
                     }
-                    File.WriteAllText("data/products.json", JsonConvert.SerializeObject(products, Formatting.Indented));
-                    List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+                    Utils.writeProducts(products);
+                    List<Customer> customers = Utils.readAllCustomers();
                     foreach (var customer in customers)
                     {
                         foreach (var product in customer.Cart)
@@ -131,9 +129,9 @@ namespace Store
                             }
                         }
                     }
-                    File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+                    Utils.writeCustomers(customers);
                     categories.Find(cat => cat.Name.Equals(CategoryName)).Name = newNameTextBox.Text;
-                    File.WriteAllText("data/categories.json", JsonConvert.SerializeObject(categories, Formatting.Indented));
+                    Utils.writeCategories(categories);
                     darkSectionPanel1.SectionHeader = string.Format("Товары категории \"{0}\"", newNameTextBox.Text);
                     MessageBox.Show(string.Format("Категория \"{0}\" была успешно переименована в \"{1}\"", CategoryName,
                                     newNameTextBox.Text));
@@ -142,7 +140,7 @@ namespace Store
             }
             else
             {
-                List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
+                List<Category> categories = Utils.readAllCategories();
                 if (categories.Find(cat => cat.Name.Equals(ParentName)).Subcategories
                     .Find(sub => sub.Name.Equals(newNameTextBox.Text)) != null)
                 {
@@ -150,7 +148,7 @@ namespace Store
                 }
                 else
                 {
-                    List<Product> products = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"));
+                    List<Product> products = Utils.readAllProducts();
                     foreach (var product in products)
                     {
                         if (product.Subcategory.Equals(CategoryName))
@@ -158,8 +156,8 @@ namespace Store
                             product.Subcategory = newNameTextBox.Text;
                         }
                     }
-                    File.WriteAllText("data/products.json", JsonConvert.SerializeObject(products, Formatting.Indented));
-                    List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+                    Utils.writeProducts(products);
+                    List<Customer> customers = Utils.readAllCustomers();
                     foreach (var customer in customers)
                     {
                         foreach (var product in customer.Cart)
@@ -177,10 +175,10 @@ namespace Store
                             }
                         }
                     }
-                    File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+                    Utils.writeCustomers(customers);
                     categories.Find(cat => cat.Name.Equals(ParentName)).Subcategories
                         .Find(sub => sub.Name.Equals(CategoryName)).Name = newNameTextBox.Text;
-                    File.WriteAllText("data/categories.json", JsonConvert.SerializeObject(categories, Formatting.Indented));
+                    Utils.writeCategories(categories);
                     darkSectionPanel1.SectionHeader = string.Format("Товары подкатегории \"{0}\"", newNameTextBox.Text);
                     MessageBox.Show(string.Format("Подкатегория \"{0}\" была успешно переименована в \"{1}\"", CategoryName,
                                     newNameTextBox.Text));
@@ -193,8 +191,8 @@ namespace Store
         private void buttonClearCat_Click(object sender, EventArgs e)
         {
             productsListView.Items.Clear();
-            List<Product> allProducts = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"));
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
+            List<Product> allProducts = Utils.readAllProducts();
+            List<Customer> customers = Utils.readAllCustomers();
             if (CategoryNotSubcategory)
             {
                 foreach (Product product in allProducts)
@@ -252,8 +250,8 @@ namespace Store
                     }
                 }
             }
-            File.WriteAllText("data/products.json", JsonConvert.SerializeObject(allProducts, Formatting.Indented));
-            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
+            Utils.writeProducts(allProducts);
+            Utils.writeCustomers(customers);
             if (CategoryNotSubcategory)
                 MessageBox.Show(string.Format("Категория \"{0}\" была успешно очищена", CategoryName));
             else
@@ -275,9 +273,9 @@ namespace Store
 
         private void buttonDeleteCat_Click(object sender, EventArgs e)
         {
-            List<Product> allProducts = JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"));
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"));
-            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
+            List<Product> allProducts = Utils.readAllProducts();
+            List<Customer> customers = Utils.readAllCustomers();
+            List<Category> categories = Utils.readAllCategories();
             if (CategoryNotSubcategory)
             {
                 foreach (Product product in allProducts)
@@ -339,9 +337,9 @@ namespace Store
                     .RemoveAt(categories.Find(cat => cat.Name.Equals(ParentName))
                     .Subcategories.FindIndex(sub => sub.Name.Equals(CategoryName)));
             }
-            File.WriteAllText("data/products.json", JsonConvert.SerializeObject(allProducts, Formatting.Indented));
-            File.WriteAllText("data/customers.json", JsonConvert.SerializeObject(customers, Formatting.Indented));
-            File.WriteAllText("data/categories.json", JsonConvert.SerializeObject(categories, Formatting.Indented));
+            Utils.writeProducts(allProducts);
+            Utils.writeCustomers(customers);
+            Utils.writeCategories(categories);
             if (CategoryNotSubcategory)
                 MessageBox.Show(string.Format("Категория \"{0}\" была успешно удалена", CategoryName));
             else

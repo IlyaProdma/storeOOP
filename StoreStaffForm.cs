@@ -16,48 +16,11 @@ namespace Store
 {
     public partial class StoreStaffForm : DarkForm
     {
-        private DarkTreeNode MakeNode(Category category)
-        {
-            DarkTreeNode node = new DarkTreeNode(category.Name);
-            if (category.Subcategories != null)
-                foreach (Subcategory subcategory in category.Subcategories)
-                    node.Nodes.Add(new DarkTreeNode(subcategory.Name));
-            return node;
-        }
-
-        private void SetTreeview(List<Category> categories)
-        {
-            categoriesTree.Nodes.Clear();
-            List<DarkTreeNode> treeNodes = new List<DarkTreeNode>();
-            for (int i = 0; i < categories.Count; i++)
-            {
-                treeNodes.Add(MakeNode(categories[i]));
-                categoriesTree.Nodes.Add(treeNodes[i]);
-            }
-        }
-
-        private List<Category> readCategories()
-            => JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
-
-        private List<Product> readProductsByCategory(string category)
-            => JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"))
-                .Where<Product>(p => p.Category == category || p.Subcategory == category).ToList();
-
-        private string readImage(List<JsonImage> images, string vendorCode)
-            => images.Where<JsonImage>(im => im.VendorCode == vendorCode).ElementAt(0).Image;
-
-        private Product readProductByCode(string vendorCode)
-            => JsonConvert.DeserializeObject<List<Product>>(File.ReadAllText("data/products.json"))
-            .Where<Product>(p => p.VendorCode == vendorCode).ElementAt(0);
-
-        private Customer readCustomerByLogin(string Login)
-            => JsonConvert.DeserializeObject<List<Customer>>(File.ReadAllText("data/customers.json"))
-            .Where<Customer>(cs => cs.Login == Login).ElementAt(0);
         public StoreStaffForm()
         {
             InitializeComponent();
-            List<Category> categories = readCategories();
-            SetTreeview(categories);
+            List<Category> categories = Utils.readAllCategories();
+            Utils.setTreeview(categories, categoriesTree);
         }
 
         private void categoriesTree_MouseClick(object sender, MouseEventArgs e)
@@ -81,8 +44,8 @@ namespace Store
         {
             NewCategoryForm newCategory = new NewCategoryForm(true);
             newCategory.ShowDialog();
-            List<Category> categories = readCategories();
-            SetTreeview(categories);
+            List<Category> categories = Utils.readAllCategories();
+            Utils.setTreeview(categories, categoriesTree);
             productsListView.Items.Clear();
         }
 
@@ -90,14 +53,14 @@ namespace Store
         {
             NewCategoryForm newSubcategory = new NewCategoryForm(false);
             newSubcategory.ShowDialog();
-            List<Category> categories = readCategories();
-            SetTreeview(categories);
+            List<Category> categories = Utils.readAllCategories();
+            Utils.setTreeview(categories, categoriesTree);
             productsListView.Items.Clear();
         }
 
         private void redactCategory(object sender, EventArgs e)
         {
-            List<Category> categories = JsonConvert.DeserializeObject<List<Category>>(File.ReadAllText("data/categories.json"));
+            List<Category> categories = Utils.readAllCategories();
             if (categories.Find(cat => cat.Name.Equals(categoriesTree.SelectedNodes[0].Text)) != null)
             {
                 RedactCategoryForm redactCategory = new RedactCategoryForm(categoriesTree.SelectedNodes[0].Text, true);
@@ -110,8 +73,8 @@ namespace Store
                                                                            categoriesTree.SelectedNodes[0].ParentNode.Text);
                 redactCategory.ShowDialog();
             }
-            categories = readCategories();
-            SetTreeview(categories);
+            categories = Utils.readAllCategories();
+            Utils.setTreeview(categories, categoriesTree);
             productsListView.Items.Clear();
         }
 
@@ -119,32 +82,40 @@ namespace Store
         {
             if (categoriesTree.SelectedNodes.Count > 0)
             {
-                List<Product> products = readProductsByCategory(categoriesTree.SelectedNodes[0].Text);
                 darkSectionPanel2.SectionHeader = "Выбранная категория: " + categoriesTree.SelectedNodes[0].Text;
-                productsListView.Items.Clear();
-                ImageList imageList = new ImageList();
-                imageList.ImageSize = new Size(200, 200);
-                List<JsonImage> images = JsonConvert.DeserializeObject<List<JsonImage>>(File.ReadAllText("data/images.json"));
-                foreach (Product product in products)
+                List<Product> products;
+                if (categoriesTree.SelectedNodes[0].Text != "Все товары")
                 {
-                    imageList.Images.Add(new Bitmap(readImage(images, product.VendorCode)));
+                    products = Utils.readProductsByCategory(categoriesTree.SelectedNodes[0].Text);
                 }
-
-                Bitmap emptyImage = new Bitmap(200, 200);
-                using (Graphics gr = Graphics.FromImage(emptyImage))
+                else
                 {
-                    gr.Clear(Color.White);
+                    products = Utils.readAllProducts();
                 }
-                imageList.Images.Add(emptyImage);
-                productsListView.LargeImageList = imageList;
-                for (int i = 0; i < products.Count; ++i)
-                {
-                    ListViewItem item = new ListViewItem(new string[] { String.Format("{0} - {1}р", products[i].Name, products[i].PriceRetail.ToString()),
-                                                                        products[i].VendorCode, readImage(images, products[i].VendorCode)});
-                    item.ImageIndex = i;
-                    productsListView.Items.Add(item);
-                }
+                Utils.fillProductsListView(productsListView, products);
             }
+        }
+
+        private void productsListView_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            ListViewItem item = productsListView.HitTest(e.X, e.Y).Item;
+            if (item != null)
+            {
+                string cat = categoriesTree.SelectedNodes[0].Text;
+                RedactProductInfo productInfo = new RedactProductInfo(Utils.readProductByCode(item.SubItems[1].Text),
+                                                                      item.SubItems[2].Text);
+                productInfo.ShowDialog();
+                Utils.setTreeview(Utils.readAllCategories(), categoriesTree);
+                productsListView.Items.Clear();
+            }
+        }
+
+        private void buttonNewProduct_Click(object sender, EventArgs e)
+        {
+            RedactProductInfo redactProductInfo = new RedactProductInfo();
+            redactProductInfo.ShowDialog();
+            Utils.setTreeview(Utils.readAllCategories(), categoriesTree);
+            productsListView.Items.Clear();
         }
     }
 }

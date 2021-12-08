@@ -34,13 +34,10 @@ namespace Store
         private void buttonSignIn_Click(object sender, EventArgs e)
         {
             labelAlertNoUsersInFile.Visible = false;
-            string json = File.ReadAllText("data/customers.json");
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(json);
+            List<Customer> customers = Utils.readAllCustomers();
             //byte[] tmpSource = ASCIIEncoding.ASCII.GetBytes(textboxPassword.Text);
             //string inputPassword = BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(tmpSource));
             string inputPassword = textboxPassword.Text;
-            labelAlertNoUsersInFile.Text = customers.ElementAt(0).Password + "\n" + inputPassword + "\n" + json;
-            labelAlertNoUsersInFile.Visible = true;
             if (customers == null)
             {
                 labelAlertNoUsersInFile.Text = "There are currently no users, please sign up to continue.";
@@ -62,6 +59,14 @@ namespace Store
                             storeCustomerForm.Show();
                             break;
                         }
+                        else if (customer.Access == AccessLevel.staff)
+                        {
+                            Hide();
+                            StoreStaffForm storeStaffForm = new StoreStaffForm();
+                            storeStaffForm.FormClosed += (s, args) => this.Close();
+                            storeStaffForm.Show();
+                            break;
+                        }
                     }
                 }
             }
@@ -70,8 +75,7 @@ namespace Store
         private void buttonSignUp_Click(object sender, EventArgs e)
         {
             labelAlertNoUsersInFile.Visible = false;
-            string json = File.ReadAllText("data/customers.json");
-            List<Customer> customers = JsonConvert.DeserializeObject<List<Customer>>(json);
+            List<Customer> customers = Utils.readAllCustomers();
             if (customers == null || customers.Where<Customer>(cs => cs.Login.ToLower() == textboxLogin.Text.ToLower()).Count() <= 0)
             {
                 Customer newCustomer = new Customer(textboxLogin.Text, textboxPassword.Text);
@@ -80,8 +84,7 @@ namespace Store
                     customers = new List<Customer>();
                 }
                 customers.Add(newCustomer);
-                json = JsonConvert.SerializeObject(customers, Formatting.Indented);
-                File.WriteAllText("data/customers.json", json);
+                Utils.writeCustomers(customers);
                 labelAlertNoUsersInFile.Text = "Successfull sign up.";
                 labelAlertNoUsersInFile.Visible = true;
             }

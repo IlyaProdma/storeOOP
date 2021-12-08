@@ -10,7 +10,6 @@ namespace Store
     {
         public Subcategory(string name) : base(name)
         {
-
         }
     }
 }
