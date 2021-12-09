@@ -30,13 +30,13 @@
         {
             this.categoriesTree = new DarkUI.Controls.DarkTreeView();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            this.buttonNewProduct = new DarkUI.Controls.DarkButton();
             this.buttonOrders = new DarkUI.Controls.DarkButton();
             this.darkSectionPanel2 = new DarkUI.Controls.DarkSectionPanel();
             this.productsListView = new System.Windows.Forms.ListView();
             this.columnImage = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnName = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.columnRetailPrice = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
-            this.buttonNewProduct = new DarkUI.Controls.DarkButton();
             this.darkSectionPanel1.SuspendLayout();
             this.darkSectionPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -66,6 +66,16 @@
             this.darkSectionPanel1.Size = new System.Drawing.Size(200, 450);
             this.darkSectionPanel1.TabIndex = 1;
             // 
+            // buttonNewProduct
+            // 
+            this.buttonNewProduct.Location = new System.Drawing.Point(5, 370);
+            this.buttonNewProduct.Name = "buttonNewProduct";
+            this.buttonNewProduct.Padding = new System.Windows.Forms.Padding(5);
+            this.buttonNewProduct.Size = new System.Drawing.Size(189, 52);
+            this.buttonNewProduct.TabIndex = 2;
+            this.buttonNewProduct.Text = "Новый товар";
+            this.buttonNewProduct.Click += new System.EventHandler(this.buttonNewProduct_Click);
+            // 
             // buttonOrders
             // 
             this.buttonOrders.Location = new System.Drawing.Point(5, 312);
@@ -74,6 +84,7 @@
             this.buttonOrders.Size = new System.Drawing.Size(189, 52);
             this.buttonOrders.TabIndex = 1;
             this.buttonOrders.Text = "Заказы";
+            this.buttonOrders.Click += new System.EventHandler(this.buttonOrders_Click);
             // 
             // darkSectionPanel2
             // 
@@ -88,12 +99,13 @@
             // 
             // productsListView
             // 
-            this.productsListView.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.productsListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.productsListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.productsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnImage,
             this.columnName,
             this.columnRetailPrice});
+            this.productsListView.ForeColor = System.Drawing.Color.Gainsboro;
             this.productsListView.HideSelection = false;
             this.productsListView.Location = new System.Drawing.Point(5, 37);
             this.productsListView.Margin = new System.Windows.Forms.Padding(2);
@@ -118,16 +130,6 @@
             // 
             this.columnRetailPrice.Text = "Цена (розн.)";
             this.columnRetailPrice.Width = 537;
-            // 
-            // buttonNewProduct
-            // 
-            this.buttonNewProduct.Location = new System.Drawing.Point(5, 370);
-            this.buttonNewProduct.Name = "buttonNewProduct";
-            this.buttonNewProduct.Padding = new System.Windows.Forms.Padding(5);
-            this.buttonNewProduct.Size = new System.Drawing.Size(189, 52);
-            this.buttonNewProduct.TabIndex = 2;
-            this.buttonNewProduct.Text = "Новый товар";
-            this.buttonNewProduct.Click += new System.EventHandler(this.buttonNewProduct_Click);
             // 
             // StoreStaffForm
             // 

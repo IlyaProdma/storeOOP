@@ -117,5 +117,11 @@ namespace Store
             Utils.setTreeview(Utils.readAllCategories(), categoriesTree);
             productsListView.Items.Clear();
         }
+
+        private void buttonOrders_Click(object sender, EventArgs e)
+        {
+            RedactOperationsForm redactOperations = new RedactOperationsForm();
+            redactOperations.ShowDialog();
+        }
     }
 }

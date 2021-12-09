@@ -43,16 +43,17 @@
             // 
             // productsListView
             // 
-            this.productsListView.BackColor = System.Drawing.SystemColors.WindowFrame;
+            this.productsListView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(63)))), ((int)(((byte)(65)))));
             this.productsListView.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.productsListView.Columns.AddRange(new System.Windows.Forms.ColumnHeader[] {
             this.columnImage,
             this.columnName,
             this.columnRetailPrice});
+            this.productsListView.ForeColor = System.Drawing.Color.Gainsboro;
             this.productsListView.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.Nonclickable;
             this.productsListView.HideSelection = false;
             this.productsListView.Location = new System.Drawing.Point(3, 25);
-            this.productsListView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.productsListView.Margin = new System.Windows.Forms.Padding(2);
             this.productsListView.Name = "productsListView";
             this.productsListView.Size = new System.Drawing.Size(499, 426);
             this.productsListView.TabIndex = 1;
@@ -77,9 +78,9 @@
             // 
             this.buttonDeleteFrom.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonDeleteFrom.Location = new System.Drawing.Point(505, 68);
-            this.buttonDeleteFrom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonDeleteFrom.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDeleteFrom.Name = "buttonDeleteFrom";
-            this.buttonDeleteFrom.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.buttonDeleteFrom.Padding = new System.Windows.Forms.Padding(3);
             this.buttonDeleteFrom.Size = new System.Drawing.Size(337, 39);
             this.buttonDeleteFrom.TabIndex = 2;
             this.buttonDeleteFrom.Text = "Удалить выделенное";
@@ -89,9 +90,9 @@
             // 
             this.buttonBuy.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonBuy.Location = new System.Drawing.Point(505, 25);
-            this.buttonBuy.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.buttonBuy.Margin = new System.Windows.Forms.Padding(2);
             this.buttonBuy.Name = "buttonBuy";
-            this.buttonBuy.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.buttonBuy.Padding = new System.Windows.Forms.Padding(3);
             this.buttonBuy.Size = new System.Drawing.Size(337, 39);
             this.buttonBuy.TabIndex = 3;
             this.buttonBuy.Text = "Оформить заказ";
@@ -105,7 +106,7 @@
             this.panelWindowName.Controls.Add(this.productsListView);
             this.panelWindowName.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelWindowName.Location = new System.Drawing.Point(1, 1);
-            this.panelWindowName.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelWindowName.Margin = new System.Windows.Forms.Padding(2);
             this.panelWindowName.Name = "panelWindowName";
             this.panelWindowName.SectionHeader = null;
             this.panelWindowName.Size = new System.Drawing.Size(1061, 456);
@@ -116,7 +117,7 @@
             this.panelOperationsList.Controls.Add(this.operationsListView);
             this.panelOperationsList.Font = new System.Drawing.Font("Microsoft Sans Serif", 14F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.panelOperationsList.Location = new System.Drawing.Point(505, 111);
-            this.panelOperationsList.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.panelOperationsList.Margin = new System.Windows.Forms.Padding(2);
             this.panelOperationsList.Name = "panelOperationsList";
             this.panelOperationsList.SectionHeader = "История заказов:";
             this.panelOperationsList.Size = new System.Drawing.Size(557, 343);
@@ -125,7 +126,7 @@
             // operationsListView
             // 
             this.operationsListView.Location = new System.Drawing.Point(0, 27);
-            this.operationsListView.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.operationsListView.Margin = new System.Windows.Forms.Padding(2);
             this.operationsListView.Name = "operationsListView";
             this.operationsListView.Size = new System.Drawing.Size(547, 313);
             this.operationsListView.TabIndex = 0;
@@ -140,7 +141,7 @@
             this.MaximumSize = new System.Drawing.Size(1072, 501);
             this.MinimumSize = new System.Drawing.Size(1072, 501);
             this.Name = "IndividualProductsListForm";
-            this.Padding = new System.Windows.Forms.Padding(3, 3, 3, 3);
+            this.Padding = new System.Windows.Forms.Padding(3);
             this.Text = "IndividualProductsListForm";
             this.panelWindowName.ResumeLayout(false);
             this.panelOperationsList.ResumeLayout(false);

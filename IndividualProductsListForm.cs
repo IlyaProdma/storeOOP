@@ -67,7 +67,10 @@ namespace Store
                                                 .ElementAt(0).Operations;
                 foreach (Operation operation in operations)
                 {
-                    operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1}", operation.Product, operation.Date)));
+                    operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1} - {2}",
+                                                                                operation.Product,
+                                                                                operation.Date,
+                                                                                operation.Status.getDescription())));
                 }
             }
             else
@@ -122,8 +125,10 @@ namespace Store
                 foreach (Product product in customer.Cart)
                 {
                     DateTime date = DateTime.Now;
-                    customer.Operations.Add(new Operation(date, product.Name));
-                    operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1}", product.Name, date)));
+                    customer.Operations.Add(new Operation(date, product.Name, OperationStatus.Processing));
+                    operationsListView.Items.Add(new DarkListItem(string.Format("{0} - {1} - {2}", product.Name,
+                                                                                date,
+                                                                                OperationStatus.Processing.getDescription())));
                 }
                 customer.Cart.Clear();
                 productsListView.Items.Clear();

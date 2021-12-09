@@ -125,6 +125,12 @@
     <Compile Include="RedactCategoryForm.Designer.cs">
       <DependentUpon>RedactCategoryForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="RedactOperationsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="RedactOperationsForm.Designer.cs">
+      <DependentUpon>RedactOperationsForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="RedactProductInfo.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -173,6 +179,9 @@
     </Compile>
     <EmbeddedResource Include="RedactCategoryForm.resx">
       <DependentUpon>RedactCategoryForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="RedactOperationsForm.resx">
+      <DependentUpon>RedactOperationsForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="RedactProductInfo.resx">
       <DependentUpon>RedactProductInfo.cs</DependentUpon>
