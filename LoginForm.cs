@@ -33,7 +33,6 @@ namespace Store
 
         private void buttonSignIn_Click(object sender, EventArgs e)
         {
-            labelAlertNoUsersInFile.Visible = false;
             List<Customer> customers = Utils.readAllCustomers();
             //byte[] tmpSource = ASCIIEncoding.ASCII.GetBytes(textboxPassword.Text);
             //string inputPassword = BitConverter.ToString(new MD5CryptoServiceProvider().ComputeHash(tmpSource));
@@ -89,7 +88,6 @@ namespace Store
 
         private void buttonSignUp_Click(object sender, EventArgs e)
         {
-            labelAlertNoUsersInFile.Visible = false;
             List<Customer> customers = Utils.readAllCustomers();
             if (customers == null || customers.Where<Customer>(cs => cs.Login.ToLower() == textboxLogin.Text.ToLower()).Count() <= 0)
             {
