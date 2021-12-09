@@ -118,7 +118,7 @@ namespace Store
                 {
                     listOfAbsentProducts += string.Format("\"{0}\"\n", product.Name);
                 }
-                MessageBox.Show(listOfAbsentProducts);
+                DarkMessageBox.ShowError(listOfAbsentProducts, "Ошибка");
             }
             else
             {

@@ -136,7 +136,7 @@ namespace Store
                         }
                         else
                         {
-                            MessageBox.Show($"Невозможно подтвердить заказ, на складе недостаточно товаров: \"{op.Product}\"");
+                            DarkMessageBox.ShowError($"Невозможно подтвердить заказ, на складе недостаточно товаров: \"{op.Product}\"", "Ошибка");
                             allOk = false;
                         }
                     }

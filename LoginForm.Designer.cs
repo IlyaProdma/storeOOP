@@ -31,7 +31,6 @@
         {
             this.panelLogin = new System.Windows.Forms.Panel();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
-            this.labelAlertNoUsersInFile = new DarkUI.Controls.DarkLabel();
             this.buttonSignUp = new DarkUI.Controls.DarkButton();
             this.buttonSignIn = new DarkUI.Controls.DarkButton();
             this.labelPassword = new DarkUI.Controls.DarkLabel();
@@ -54,7 +53,6 @@
             // 
             // darkSectionPanel1
             // 
-            this.darkSectionPanel1.Controls.Add(this.labelAlertNoUsersInFile);
             this.darkSectionPanel1.Controls.Add(this.buttonSignUp);
             this.darkSectionPanel1.Controls.Add(this.buttonSignIn);
             this.darkSectionPanel1.Controls.Add(this.labelPassword);
@@ -68,17 +66,6 @@
             this.darkSectionPanel1.SectionHeader = "Login";
             this.darkSectionPanel1.Size = new System.Drawing.Size(664, 441);
             this.darkSectionPanel1.TabIndex = 0;
-            // 
-            // labelAlertNoUsersInFile
-            // 
-            this.labelAlertNoUsersInFile.AutoSize = true;
-            this.labelAlertNoUsersInFile.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.labelAlertNoUsersInFile.Location = new System.Drawing.Point(95, 330);
-            this.labelAlertNoUsersInFile.Name = "labelAlertNoUsersInFile";
-            this.labelAlertNoUsersInFile.Size = new System.Drawing.Size(479, 24);
-            this.labelAlertNoUsersInFile.TabIndex = 6;
-            this.labelAlertNoUsersInFile.Text = "There are currently no users, please sign up to continue";
-            this.labelAlertNoUsersInFile.Visible = false;
             // 
             // buttonSignUp
             // 
@@ -180,7 +167,6 @@
         private DarkUI.Controls.DarkTextBox textboxPassword;
         private DarkUI.Controls.DarkLabel labelLogin;
         private DarkUI.Controls.DarkTextBox textboxLogin;
-        private DarkUI.Controls.DarkLabel labelAlertNoUsersInFile;
     }
 }
 

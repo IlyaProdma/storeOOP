@@ -141,7 +141,7 @@ namespace Store
             }
             else
             {
-                MessageBox.Show("Заполните все поля!");
+                DarkMessageBox.ShowError("Заполните все поля!", "Ошибка");
             }
         }
 
@@ -207,7 +207,7 @@ namespace Store
                 customer.Favorites.Remove(customer.Favorites.Find(p => p.VendorCode.Equals(product.VendorCode)));
             }
             Utils.writeCustomers(allCustomers);
-            MessageBox.Show($"Товар \"{product.Name}\" успешно удален.");
+            DarkMessageBox.ShowInformation($"Товар \"{product.Name}\" успешно удален.", "Успешно");
             Close();
         }
 
@@ -220,19 +220,19 @@ namespace Store
                 List<Product> allProducts = Utils.readAllProducts();
                 if (allProducts.Find(p => p.Name.Equals(nameTextBox.Text)) != null)
                 {
-                    MessageBox.Show("Продукт с таким названием уже есть!");
+                    DarkMessageBox.ShowError("Продукт с таким названием уже есть!", "Ошибка");
                 }
                 else
                 {
                     if (allProducts.Find(p => p.VendorCode.Equals(codeTextBox.Text)) != null)
                     {
-                        MessageBox.Show("Продукт с таким артикулом уже есть!");
+                        DarkMessageBox.ShowError("Продукт с таким артикулом уже есть!", "Ошибка");
                     }
                     else
                     {
                         if (newImagePath.Equals(""))
                         {
-                            MessageBox.Show("Загрузите фото товара!");
+                            DarkMessageBox.ShowError("Загрузите фото товара!", "Ошибка");
                         }
                         else
                         {
@@ -243,7 +243,7 @@ namespace Store
                                 List<Category> categories = Utils.readAllCategories();
                                 if (categories.Find(c => c.Name.Equals(categoryTextBox.Text)) == null)
                                 {
-                                    MessageBox.Show("Такой категории не существует!");
+                                    DarkMessageBox.ShowError("Такой категории не существует!", "Ошибка");
                                 }
                                 else
                                 {
@@ -257,7 +257,7 @@ namespace Store
                                         }
                                         else
                                         {
-                                            MessageBox.Show("Такой подкатегории в данной категории нет!");
+                                            DarkMessageBox.ShowError("Такой подкатегории в данной категории нет!", "Ошибка");
                                         }
                                     }
                                     else
@@ -270,7 +270,7 @@ namespace Store
                             {
                                 if (subcategoryTextBox.Text.Length > 0)
                                 {
-                                    MessageBox.Show("Укажите помимо подкатегории еще и категорию товара!");
+                                    DarkMessageBox.ShowError("Укажите помимо подкатегории еще и категорию товара!", "Ошибка");
                                 }
                                 else
                                 {
@@ -283,7 +283,7 @@ namespace Store
             }
             else
             {
-                MessageBox.Show("Заполните все поля!");
+                DarkMessageBox.ShowError("Заполните все поля!", "Ошибка");
             }
         }
 

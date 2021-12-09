@@ -98,7 +98,7 @@ namespace Store
                 List<Category> categories = Utils.readAllCategories();
                 if (categories.Find(cat => cat.Name.Equals(newNameTextBox.Text)) != null)
                 {
-                    MessageBox.Show("Такая категория уже существует!");
+                    DarkMessageBox.ShowError("Такая категория уже существует!", "Ошибка");
                 }
                 else
                 {
@@ -133,8 +133,8 @@ namespace Store
                     categories.Find(cat => cat.Name.Equals(CategoryName)).Name = newNameTextBox.Text;
                     Utils.writeCategories(categories);
                     darkSectionPanel1.SectionHeader = string.Format("Товары категории \"{0}\"", newNameTextBox.Text);
-                    MessageBox.Show(string.Format("Категория \"{0}\" была успешно переименована в \"{1}\"", CategoryName,
-                                    newNameTextBox.Text));
+                    DarkMessageBox.ShowInformation(string.Format("Категория \"{0}\" была успешно переименована в \"{1}\"", CategoryName,
+                                                   newNameTextBox.Text), "Успешно");
                     Close();
                 }
             }
@@ -144,7 +144,7 @@ namespace Store
                 if (categories.Find(cat => cat.Name.Equals(ParentName)).Subcategories
                     .Find(sub => sub.Name.Equals(newNameTextBox.Text)) != null)
                 {
-                    MessageBox.Show("Такая подкатегория уже существует!");
+                    DarkMessageBox.ShowError("Такая подкатегория уже существует!", "Ошибка");
                 }
                 else
                 {
@@ -180,8 +180,8 @@ namespace Store
                         .Find(sub => sub.Name.Equals(CategoryName)).Name = newNameTextBox.Text;
                     Utils.writeCategories(categories);
                     darkSectionPanel1.SectionHeader = string.Format("Товары подкатегории \"{0}\"", newNameTextBox.Text);
-                    MessageBox.Show(string.Format("Подкатегория \"{0}\" была успешно переименована в \"{1}\"", CategoryName,
-                                    newNameTextBox.Text));
+                    DarkMessageBox.ShowInformation(string.Format("Подкатегория \"{0}\" была успешно переименована в \"{1}\"", CategoryName,
+                                                   newNameTextBox.Text), "Успешно");
                     Close();
                 }
             }
@@ -253,9 +253,9 @@ namespace Store
             Utils.writeProducts(allProducts);
             Utils.writeCustomers(customers);
             if (CategoryNotSubcategory)
-                MessageBox.Show(string.Format("Категория \"{0}\" была успешно очищена", CategoryName));
+                DarkMessageBox.ShowInformation(string.Format("Категория \"{0}\" была успешно очищена", CategoryName), "Успешно");
             else
-                MessageBox.Show(string.Format("Подкатегория \"{0}\" была успешно очищена", CategoryName));
+                DarkMessageBox.ShowInformation(string.Format("Подкатегория \"{0}\" была успешно очищена", CategoryName), "Успешно");
             Close();
         }
 
@@ -341,9 +341,9 @@ namespace Store
             Utils.writeCustomers(customers);
             Utils.writeCategories(categories);
             if (CategoryNotSubcategory)
-                MessageBox.Show(string.Format("Категория \"{0}\" была успешно удалена", CategoryName));
+                DarkMessageBox.ShowInformation(string.Format("Категория \"{0}\" была успешно удалена", CategoryName), "Успешно");
             else
-                MessageBox.Show(string.Format("Подкатегория \"{0}\" была успешно удалена", CategoryName));
+                DarkMessageBox.ShowInformation(string.Format("Подкатегория \"{0}\" была успешно удалена", CategoryName), "Успешно");
             Close();
         }
     }

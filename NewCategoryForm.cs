@@ -76,7 +76,7 @@ namespace Store
             {
                 if (categories.Find(cat => cat.Name.Equals(nameTextBox.Text)) != null)
                 {
-                    MessageBox.Show("There already is such a category!");
+                    DarkMessageBox.ShowError("Такая категория уже существует!", "Ошибка");
                 }
                 else
                 {
@@ -87,7 +87,7 @@ namespace Store
                         categoriesListView.Items.Add(new DarkListItem(category.Name));
                     }
                     Utils.writeCategories(categories);
-                    MessageBox.Show("Successfully added new category");
+                    DarkMessageBox.ShowInformation("Новая категория успешно создана.", "Успешно");
                     Close();
                 }
             }
@@ -96,13 +96,13 @@ namespace Store
                 int index = categories.FindIndex(cat => cat.Name.Equals(categoriesListView.Items[categoriesListView.SelectedIndices[0]].Text));
                 if (categories[index].Subcategories.Find(subcat => subcat.Name.Equals(nameTextBox.Text)) != null)
                 {
-                    MessageBox.Show("There already is such a subcategory in this category!");
+                    DarkMessageBox.ShowError("Такая подкатегория уже существует в данной категории!", "Ошибка");
                 }
                 else
                 {
                     categories[index].Subcategories.Add(new Subcategory(nameTextBox.Text));
                     Utils.writeCategories(categories);
-                    MessageBox.Show(string.Format("Successfully added new subcategory to category {0}", categories[index].Name));
+                    DarkMessageBox.ShowInformation($"Новая подкатегория для категории \"{categories[index].Name}\" успешно создана.", "Успешно");
                     Close();
                 }
             }

@@ -40,17 +40,19 @@ namespace Store
             string inputPassword = textboxPassword.Text;
             if (customers == null)
             {
-                labelAlertNoUsersInFile.Text = "There are currently no users, please sign up to continue.";
-                labelAlertNoUsersInFile.Visible = true;
+                DarkMessageBox.ShowError("В базе нет пользователей.", "Ошибка");
             }
             else
             {
+                bool correctLogin = false;
+                bool correctPassword = false;
                 foreach (Customer customer in customers)
                 {
-                    if (customer.Login == textboxLogin.Text && customer.Password.Equals(inputPassword))
+                    if (customer.Login.Equals(textboxLogin.Text) && customer.Password.Equals(inputPassword))
                     {
-                        labelAlertNoUsersInFile.Text = "Successfull sign in.";
-                        labelAlertNoUsersInFile.Visible = true;
+                        correctLogin = true;
+                        correctPassword = true;
+                        DarkMessageBox.ShowInformation("Успешный вход в систему.", "Успешно");
                         if (customer.Access == AccessLevel.customer)
                         {
                             Hide();
@@ -68,6 +70,19 @@ namespace Store
                             break;
                         }
                     }
+                    else if (!customer.Password.Equals(inputPassword))
+                    {
+                        correctLogin = true;
+                        correctPassword = false;
+                    }
+                }
+                if (correctLogin == false)
+                {
+                    DarkMessageBox.ShowError("Такого пользователя нет!", "Ошибка");
+                }
+                if (correctPassword == false)
+                {
+                    DarkMessageBox.ShowError("Неверный пароль!", "Ошибка");
                 }
             }
         }
@@ -85,13 +100,11 @@ namespace Store
                 }
                 customers.Add(newCustomer);
                 Utils.writeCustomers(customers);
-                labelAlertNoUsersInFile.Text = "Successfull sign up.";
-                labelAlertNoUsersInFile.Visible = true;
+                DarkMessageBox.ShowInformation("Успешная регистрация новго пользователя.", "Успешно");
             }
             else if (customers.Where<Customer>(cs => cs.Login.ToLower() == textboxLogin.Text.ToLower()).Count() > 0)
             {
-                labelAlertNoUsersInFile.Text = "There is already a user with this name.";
-                labelAlertNoUsersInFile.Visible = true;
+                DarkMessageBox.ShowError("Такой пользователь уже есть!", "Ошибка");
             }
         }
     }
