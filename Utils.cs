@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Reflection;
 using System.ComponentModel;
+using System.Drawing.Imaging;
 
 namespace Store
 {
@@ -102,6 +103,7 @@ namespace Store
             ImageList imageList = new ImageList();
             imageList.ImageSize = new Size(200, 200);
             List<JsonImage> images = JsonConvert.DeserializeObject<List<JsonImage>>(File.ReadAllText("data/images.json"));
+            imageList.ColorDepth = ColorDepth.Depth32Bit;
             foreach (Product product in products)
             {
                 imageList.Images.Add(new Bitmap(Utils.readImage(images, product.VendorCode)));
