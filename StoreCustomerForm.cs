@@ -32,16 +32,14 @@ namespace Store
             if (categoriesTree.SelectedNodes.Count > 0)
             {
                 darkSectionPanel2.SectionHeader = "Выбранная категория: " + categoriesTree.SelectedNodes[0].Text;
-                List<Product> products;
+                List<Product> products = Utils.readAllProducts();
                 if (categoriesTree.SelectedNodes[0].Text != "Все товары")
                 {
-                    products = Utils.readProductsByCategory(categoriesTree.SelectedNodes[0].Text);
+                    if (products != null)
+                        products = Utils.readProductsByCategory(categoriesTree.SelectedNodes[0].Text);
                 }
-                else
-                {
-                    products = Utils.readAllProducts();
-                }
-                Utils.fillProductsListView(productsListView, products);
+                if (products != null)
+                    Utils.fillProductsListView(productsListView, products);
             }
         }
 
