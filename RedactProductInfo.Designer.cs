@@ -41,6 +41,8 @@
             this.placeProductionLabel = new DarkUI.Controls.DarkLabel();
             this.seriesProductionLabel = new DarkUI.Controls.DarkLabel();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            this.subcategoryComboBox = new DarkUI.Controls.DarkComboBox();
+            this.categoryComboBox = new DarkUI.Controls.DarkComboBox();
             this.subcategoryLabel = new DarkUI.Controls.DarkLabel();
             this.categoryLabel = new DarkUI.Controls.DarkLabel();
             this.seriesProductionTextBox = new DarkUI.Controls.DarkTextBox();
@@ -54,8 +56,6 @@
             this.cancelButton = new DarkUI.Controls.DarkButton();
             this.applyButton = new DarkUI.Controls.DarkButton();
             this.deleteButton = new DarkUI.Controls.DarkButton();
-            this.categoryComboBox = new DarkUI.Controls.DarkComboBox();
-            this.subcategoryComboBox = new DarkUI.Controls.DarkComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.productPictureBox)).BeginInit();
             this.darkSectionPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -209,6 +209,27 @@
             this.darkSectionPanel1.Size = new System.Drawing.Size(470, 426);
             this.darkSectionPanel1.TabIndex = 12;
             // 
+            // subcategoryComboBox
+            // 
+            this.subcategoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.subcategoryComboBox.FormattingEnabled = true;
+            this.subcategoryComboBox.Location = new System.Drawing.Point(140, 375);
+            this.subcategoryComboBox.Name = "subcategoryComboBox";
+            this.subcategoryComboBox.Size = new System.Drawing.Size(326, 21);
+            this.subcategoryComboBox.TabIndex = 18;
+            this.subcategoryComboBox.Visible = false;
+            // 
+            // categoryComboBox
+            // 
+            this.categoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.categoryComboBox.FormattingEnabled = true;
+            this.categoryComboBox.Location = new System.Drawing.Point(140, 339);
+            this.categoryComboBox.Name = "categoryComboBox";
+            this.categoryComboBox.Size = new System.Drawing.Size(326, 21);
+            this.categoryComboBox.TabIndex = 17;
+            this.categoryComboBox.Visible = false;
+            this.categoryComboBox.SelectedIndexChanged += new System.EventHandler(this.categoryComboBox_SelectedIndexChanged);
+            // 
             // subcategoryLabel
             // 
             this.subcategoryLabel.AutoSize = true;
@@ -343,25 +364,6 @@
             this.deleteButton.TabIndex = 16;
             this.deleteButton.Text = "Удалить товар";
             this.deleteButton.Click += new System.EventHandler(this.buttonDelete_Click);
-            // 
-            // categoryComboBox
-            // 
-            this.categoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.categoryComboBox.FormattingEnabled = true;
-            this.categoryComboBox.Location = new System.Drawing.Point(140, 339);
-            this.categoryComboBox.Name = "categoryComboBox";
-            this.categoryComboBox.Size = new System.Drawing.Size(326, 21);
-            this.categoryComboBox.TabIndex = 17;
-            this.categoryComboBox.SelectedIndexChanged += new System.EventHandler(this.categoryComboBox_SelectedIndexChanged);
-            // 
-            // subcategoryComboBox
-            // 
-            this.subcategoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
-            this.subcategoryComboBox.FormattingEnabled = true;
-            this.subcategoryComboBox.Location = new System.Drawing.Point(140, 375);
-            this.subcategoryComboBox.Name = "subcategoryComboBox";
-            this.subcategoryComboBox.Size = new System.Drawing.Size(326, 21);
-            this.subcategoryComboBox.TabIndex = 18;
             // 
             // RedactProductInfo
             // 

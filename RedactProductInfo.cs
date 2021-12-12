@@ -37,6 +37,7 @@ namespace Store
             seriesProductionTextBox.Text = product.ProductionSeries;
             productPictureBox.Image = new Bitmap(imagePath);
             applyButton.Click += applyButton_Click;
+            fillCategoryComboBox();
         }
 
         public RedactProductInfo()
