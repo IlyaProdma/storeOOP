@@ -29,7 +29,7 @@ namespace Store
             this.password = password;
             this.access = access;
         }
-
+        
         public string Login
         {
             get
