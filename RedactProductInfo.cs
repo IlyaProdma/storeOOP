@@ -251,18 +251,13 @@ namespace Store
                             string subcategory = "";
                             if (categoryComboBox.SelectedItem != null)
                             {
-                                List<Category> categories = Utils.readAllCategories();
                                 category = categoryComboBox.SelectedItem.ToString();
                                 if (subcategoryComboBox.SelectedItem != null)
                                 {
                                     subcategory = subcategoryComboBox.SelectedItem.ToString();
-                                    addNewProduct(allProducts, category, subcategory);
-                                }
-                                else
-                                {
-                                    addNewProduct(allProducts, category, subcategory);
                                 }
                             }
+                            addNewProduct(allProducts, category, subcategory);
                         }
                     }
                 }
