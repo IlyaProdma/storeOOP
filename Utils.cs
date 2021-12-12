@@ -47,6 +47,7 @@ namespace Store
 
         public static void setTreeview(List<Category> categories, DarkTreeView categoriesTree)
         {
+            categoriesTree.Nodes.Clear();
             List<DarkTreeNode> treeNodes = new List<DarkTreeNode>();
             categoriesTree.Nodes.Add(makeNode(new Category("Все товары")));
             for (int i = 0; i < categories.Count; i++)
