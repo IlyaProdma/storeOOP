@@ -46,9 +46,20 @@ namespace Store
             applyButton.Click += addNewProduct_Click;
             deleteButton.Visible = false;
             categoryLabel.Visible = true;
-            categoryTextBox.Visible = true;
+            categoryComboBox.Visible = true;
             subcategoryLabel.Visible = true;
-            subcategoryTextBox.Visible = true;
+            subcategoryComboBox.Visible = true;
+            fillCategoryComboBox();
+        }
+
+        private void fillCategoryComboBox()
+        {
+            List<Category> categories = Utils.readAllCategories();
+            categoryComboBox.Items.Clear();
+            foreach (var cat in categories)
+            {
+                categoryComboBox.Items.Add(cat.Name);
+            }
         }
 
         private void priceRetailTextBox_TextChanged(object sender, EventArgs e)
@@ -238,39 +249,14 @@ namespace Store
                         {
                             string category = "";
                             string subcategory = "";
-                            if (categoryTextBox.Text.Length > 0)
+                            if (categoryComboBox.SelectedItem != null)
                             {
                                 List<Category> categories = Utils.readAllCategories();
-                                if (categories.Find(c => c.Name.Equals(categoryTextBox.Text)) == null)
+                                category = categoryComboBox.SelectedItem.ToString();
+                                if (subcategoryComboBox.SelectedItem != null)
                                 {
-                                    DarkMessageBox.ShowError("Такой категории не существует!", "Ошибка");
-                                }
-                                else
-                                {
-                                    category = categoryTextBox.Text;
-                                    if (subcategoryTextBox.Text.Length > 0)
-                                    {
-                                        if (categories.Find(c => c.Name.Equals(category))
-                                            .Subcategories.Find(s => s.Name.Equals(subcategoryTextBox.Text)) != null)
-                                        {
-                                            addNewProduct(allProducts, category, subcategory);
-                                        }
-                                        else
-                                        {
-                                            DarkMessageBox.ShowError("Такой подкатегории в данной категории нет!", "Ошибка");
-                                        }
-                                    }
-                                    else
-                                    {
-                                        addNewProduct(allProducts, category, subcategory);
-                                    }
-                                }
-                            }
-                            else
-                            {
-                                if (subcategoryTextBox.Text.Length > 0)
-                                {
-                                    DarkMessageBox.ShowError("Укажите помимо подкатегории еще и категорию товара!", "Ошибка");
+                                    subcategory = subcategoryComboBox.SelectedItem.ToString();
+                                    addNewProduct(allProducts, category, subcategory);
                                 }
                                 else
                                 {
@@ -306,6 +292,19 @@ namespace Store
             images.Add(new JsonImage(codeTextBox.Text, newImagePath));
             Utils.writeImages(images);
             Close();
+        }
+
+        private void categoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (categoryComboBox.SelectedItem != null)
+            {
+                Category category = Utils.readAllCategories().Find(cat => cat.Name.Equals(categoryComboBox.SelectedItem.ToString()));
+                subcategoryComboBox.Items.Clear();
+                foreach (var subcat in category.Subcategories)
+                {
+                    subcategoryComboBox.Items.Add(subcat.Name);
+                }
+            }
         }
     }
 }

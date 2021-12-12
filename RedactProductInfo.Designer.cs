@@ -41,6 +41,8 @@
             this.placeProductionLabel = new DarkUI.Controls.DarkLabel();
             this.seriesProductionLabel = new DarkUI.Controls.DarkLabel();
             this.darkSectionPanel1 = new DarkUI.Controls.DarkSectionPanel();
+            this.subcategoryLabel = new DarkUI.Controls.DarkLabel();
+            this.categoryLabel = new DarkUI.Controls.DarkLabel();
             this.seriesProductionTextBox = new DarkUI.Controls.DarkTextBox();
             this.placeProductionTextBox = new DarkUI.Controls.DarkTextBox();
             this.manufacturerTextBox = new DarkUI.Controls.DarkTextBox();
@@ -52,10 +54,8 @@
             this.cancelButton = new DarkUI.Controls.DarkButton();
             this.applyButton = new DarkUI.Controls.DarkButton();
             this.deleteButton = new DarkUI.Controls.DarkButton();
-            this.categoryLabel = new DarkUI.Controls.DarkLabel();
-            this.categoryTextBox = new DarkUI.Controls.DarkTextBox();
-            this.subcategoryTextBox = new DarkUI.Controls.DarkTextBox();
-            this.subcategoryLabel = new DarkUI.Controls.DarkLabel();
+            this.categoryComboBox = new DarkUI.Controls.DarkComboBox();
+            this.subcategoryComboBox = new DarkUI.Controls.DarkComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.productPictureBox)).BeginInit();
             this.darkSectionPanel1.SuspendLayout();
             this.SuspendLayout();
@@ -181,9 +181,9 @@
             // 
             // darkSectionPanel1
             // 
-            this.darkSectionPanel1.Controls.Add(this.subcategoryTextBox);
+            this.darkSectionPanel1.Controls.Add(this.subcategoryComboBox);
+            this.darkSectionPanel1.Controls.Add(this.categoryComboBox);
             this.darkSectionPanel1.Controls.Add(this.subcategoryLabel);
-            this.darkSectionPanel1.Controls.Add(this.categoryTextBox);
             this.darkSectionPanel1.Controls.Add(this.categoryLabel);
             this.darkSectionPanel1.Controls.Add(this.seriesProductionTextBox);
             this.darkSectionPanel1.Controls.Add(this.seriesProductionLabel);
@@ -208,6 +208,28 @@
             this.darkSectionPanel1.SectionHeader = null;
             this.darkSectionPanel1.Size = new System.Drawing.Size(470, 426);
             this.darkSectionPanel1.TabIndex = 12;
+            // 
+            // subcategoryLabel
+            // 
+            this.subcategoryLabel.AutoSize = true;
+            this.subcategoryLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.subcategoryLabel.Location = new System.Drawing.Point(4, 378);
+            this.subcategoryLabel.Name = "subcategoryLabel";
+            this.subcategoryLabel.Size = new System.Drawing.Size(82, 13);
+            this.subcategoryLabel.TabIndex = 16;
+            this.subcategoryLabel.Text = "Подкатегория:";
+            this.subcategoryLabel.Visible = false;
+            // 
+            // categoryLabel
+            // 
+            this.categoryLabel.AutoSize = true;
+            this.categoryLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
+            this.categoryLabel.Location = new System.Drawing.Point(4, 342);
+            this.categoryLabel.Name = "categoryLabel";
+            this.categoryLabel.Size = new System.Drawing.Size(63, 13);
+            this.categoryLabel.TabIndex = 14;
+            this.categoryLabel.Text = "Категория:";
+            this.categoryLabel.Visible = false;
             // 
             // seriesProductionTextBox
             // 
@@ -322,55 +344,30 @@
             this.deleteButton.Text = "Удалить товар";
             this.deleteButton.Click += new System.EventHandler(this.buttonDelete_Click);
             // 
-            // categoryLabel
+            // categoryComboBox
             // 
-            this.categoryLabel.AutoSize = true;
-            this.categoryLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.categoryLabel.Location = new System.Drawing.Point(4, 342);
-            this.categoryLabel.Name = "categoryLabel";
-            this.categoryLabel.Size = new System.Drawing.Size(63, 13);
-            this.categoryLabel.TabIndex = 14;
-            this.categoryLabel.Text = "Категория:";
-            this.categoryLabel.Visible = false;
+            this.categoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.categoryComboBox.FormattingEnabled = true;
+            this.categoryComboBox.Location = new System.Drawing.Point(140, 339);
+            this.categoryComboBox.Name = "categoryComboBox";
+            this.categoryComboBox.Size = new System.Drawing.Size(326, 21);
+            this.categoryComboBox.TabIndex = 17;
+            this.categoryComboBox.SelectedIndexChanged += new System.EventHandler(this.categoryComboBox_SelectedIndexChanged);
             // 
-            // categoryTextBox
+            // subcategoryComboBox
             // 
-            this.categoryTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.categoryTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.categoryTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.categoryTextBox.Location = new System.Drawing.Point(140, 340);
-            this.categoryTextBox.Name = "categoryTextBox";
-            this.categoryTextBox.Size = new System.Drawing.Size(326, 20);
-            this.categoryTextBox.TabIndex = 15;
-            this.categoryTextBox.Visible = false;
-            // 
-            // subcategoryTextBox
-            // 
-            this.subcategoryTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(69)))), ((int)(((byte)(73)))), ((int)(((byte)(74)))));
-            this.subcategoryTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.subcategoryTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.subcategoryTextBox.Location = new System.Drawing.Point(140, 376);
-            this.subcategoryTextBox.Name = "subcategoryTextBox";
-            this.subcategoryTextBox.Size = new System.Drawing.Size(326, 20);
-            this.subcategoryTextBox.TabIndex = 17;
-            this.subcategoryTextBox.Visible = false;
-            // 
-            // subcategoryLabel
-            // 
-            this.subcategoryLabel.AutoSize = true;
-            this.subcategoryLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(220)))), ((int)(((byte)(220)))));
-            this.subcategoryLabel.Location = new System.Drawing.Point(4, 378);
-            this.subcategoryLabel.Name = "subcategoryLabel";
-            this.subcategoryLabel.Size = new System.Drawing.Size(82, 13);
-            this.subcategoryLabel.TabIndex = 16;
-            this.subcategoryLabel.Text = "Подкатегория:";
-            this.subcategoryLabel.Visible = false;
+            this.subcategoryComboBox.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawVariable;
+            this.subcategoryComboBox.FormattingEnabled = true;
+            this.subcategoryComboBox.Location = new System.Drawing.Point(140, 375);
+            this.subcategoryComboBox.Name = "subcategoryComboBox";
+            this.subcategoryComboBox.Size = new System.Drawing.Size(326, 21);
+            this.subcategoryComboBox.TabIndex = 18;
             // 
             // RedactProductInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(844, 451);
+            this.ClientSize = new System.Drawing.Size(838, 434);
             this.Controls.Add(this.cancelButton);
             this.Controls.Add(this.deleteButton);
             this.Controls.Add(this.applyButton);
@@ -414,9 +411,9 @@
         private DarkUI.Controls.DarkButton cancelButton;
         private DarkUI.Controls.DarkButton applyButton;
         private DarkUI.Controls.DarkButton deleteButton;
-        private DarkUI.Controls.DarkTextBox subcategoryTextBox;
         private DarkUI.Controls.DarkLabel subcategoryLabel;
-        private DarkUI.Controls.DarkTextBox categoryTextBox;
         private DarkUI.Controls.DarkLabel categoryLabel;
+        private DarkUI.Controls.DarkComboBox subcategoryComboBox;
+        private DarkUI.Controls.DarkComboBox categoryComboBox;
     }
 }
